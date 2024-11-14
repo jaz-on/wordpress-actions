@@ -119,13 +119,9 @@ echo "✓ Plugin deployed!"
 # then generate a zip
 #if [[ $VERSION != *"-"* ]];then
     echo "➤ Generating zip file…"
-    
-    # use a symbolic link so the directory in the zip matches the slug
     ln -s "${SVN_DIR}/trunk" "${SVN_DIR}/${SLUG}"
-    zip -r "${GITHUB_WORKSPACE}/${SLUG}.zip" "$SLUG"
-    unlink "${SVN_DIR}/${SLUG}"
-
-    echo "zip_path=${GITHUB_WORKSPACE}/${SLUG}.zip" >> "${GITHUB_OUTPUT}"
+    zip -r "${GITHUB_WORKSPACE}/${SLUG}-${VERSION}.zip" "$SLUG"
+    echo "zip_file=${SLUG}-${VERSION}.zip" >> "${GITHUB_OUTPUT}"
     echo "✓ Zip file generated!"
 #fi
 
