@@ -113,6 +113,8 @@ svn status
 echo "➤ Committing files…"
 #svn commit -m "$NAME $VERSION released from GitHub" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
 
+echo "✓ Plugin deployed!"
+
 # If it's a full release i.e. tag like "1.0.0" and not like "1.0.0-rc1",
 # then generate a zip
 #if [[ $VERSION != *"-"* ]];then
@@ -123,8 +125,8 @@ echo "➤ Committing files…"
     zip -r "${GITHUB_WORKSPACE}/${SLUG}.zip" "$SLUG"
     unlink "${SVN_DIR}/${SLUG}"
 
-    echo "zip-path=${GITHUB_WORKSPACE}/${SLUG}.zip" >> "${GITHUB_OUTPUT}"
+    echo "zip_path=${GITHUB_WORKSPACE}/${SLUG}.zip" >> "${GITHUB_OUTPUT}"
     echo "✓ Zip file generated!"
 #fi
 
-echo "✓ Plugin deployed!"
+
