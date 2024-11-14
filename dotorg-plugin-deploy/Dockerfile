@@ -10,7 +10,7 @@ LABEL version="1.1.0"
 LABEL repository="https://github.com/Pierre-Lannoy/wordpress-actions"
 
 RUN apt-get update \
-	&& apt-get install -y subversion rsync git \
+	&& apt-get install -y subversion rsync git zip \
 	&& apt-get clean -y \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& git config --global user.email "pierre@lannoy.fr" \
