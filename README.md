@@ -53,3 +53,33 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
 ```
+
+Since version 1.1.0, this action generates a zip package (in the format WordPress excepts). You can "attach" this zip file to the release assets, like any release binary, by adding the following final step:
+
+```yml
+name: New WordPress.org release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  tag:
+    name: New release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: WordPress Plugin Deploy
+        uses: Pierre-Lannoy/wordpress-actions/dotorg-plugin-deploy@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLUG: the-plugin-slug
+          NAME: The Plugin Name
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+      - name: Adding plugin zip to release
+        uses: softprops/action-gh-release@v1
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          files: ${{ steps.wordpress_plugin_deploy.outputs.zip_file }}
+```

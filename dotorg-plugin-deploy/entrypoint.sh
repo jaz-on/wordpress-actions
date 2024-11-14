@@ -117,12 +117,12 @@ echo "✓ Plugin deployed!"
 
 # If it's a full release i.e. tag like "1.0.0" and not like "1.0.0-rc1",
 # then generate a zip
-#if [[ $VERSION != *"-"* ]];then
+if [[ $VERSION != *"-"* ]];then
     echo "➤ Generating zip file…"
     ln -s "${SVN_DIR}/trunk" "${SVN_DIR}/${SLUG}"
     zip -r "${GITHUB_WORKSPACE}/${SLUG}-${VERSION}.zip" "$SLUG"
     echo "zip_file=${SLUG}-${VERSION}.zip" >> "${GITHUB_OUTPUT}"
     echo "✓ Zip file generated!"
-#fi
+fi
 
 
