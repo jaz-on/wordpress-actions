@@ -44,11 +44,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: WordPress Plugin Deploy
+      - name: Deploy plugin to WordPress official repository
+        id: wordpress_plugin_deploy
         uses: Pierre-Lannoy/wordpress-actions/dotorg-plugin-deploy@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLUG: the-plugin-slug
+          SLUG: plugin-slug
           NAME: The Plugin Name
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
@@ -69,11 +70,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: WordPress Plugin Deploy
+      - name: Deploy plugin to WordPress official repository
+        id: wordpress_plugin_deploy
         uses: Pierre-Lannoy/wordpress-actions/dotorg-plugin-deploy@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLUG: the-plugin-slug
+          SLUG: plugin-slug
           NAME: The Plugin Name
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
