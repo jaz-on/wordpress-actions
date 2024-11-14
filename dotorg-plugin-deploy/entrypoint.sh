@@ -123,7 +123,7 @@ echo "➤ Committing files…"
     zip -r "${GITHUB_WORKSPACE}/${SLUG}.zip" "$SLUG"
     unlink "${SVN_DIR}/${SLUG}"
 
-    echo "zip-path=${GITHUB_WORKSPACE}/${SLUG}.zip" #>> "${GITHUB_OUTPUT}"
+    echo "zip-path=${GITHUB_WORKSPACE}/${SLUG}.zip" >> "${GITHUB_OUTPUT}"
     echo "✓ Zip file generated!"
 #fi
 
