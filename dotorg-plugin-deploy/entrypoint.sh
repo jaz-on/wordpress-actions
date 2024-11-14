@@ -47,13 +47,13 @@ SVN_DIR="/github/svn-${SLUG}"
 
 # Checkout just trunk and assets for efficiency
 # Tagging will be handled on the SVN level
-echo "➤ Checking out .org repository..."
+echo "➤ Checking out .org repository…"
 svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
 cd "$SVN_DIR"
 svn update --set-depth infinity assets
 svn update --set-depth infinity trunk
 
-echo "➤ Copying files..."
+echo "➤ Copying files…"
 cd "$GITHUB_WORKSPACE"
 
 # "Export" a cleaned copy to a temp directory
@@ -94,7 +94,7 @@ rsync -rc "$GITHUB_WORKSPACE/$ASSETS_DIR/" assets/ --delete
 # Add everything and commit to SVN
 # The force flag ensures we recurse into subdirectories even if they are already added
 # Suppress stdout in favor of svn status later for readability
-echo "➤ Preparing files..."
+echo "➤ Preparing files…"
 svn add . --force > /dev/null
 
 # SVN delete all deleted files
@@ -104,13 +104,27 @@ svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm --force % > /dev/null
 # If it's a full release i.e. tag like "1.0.0" and not like "1.0.0-rc1",
 # then copy tag before commiting
 if [[ $VERSION != *"-"* ]];then
-    echo "➤ Copying tag..."
+    echo "➤ Copying tag…"
     svn cp "trunk" "tags/$VERSION"
 fi
 
 svn status
 
-echo "➤ Committing files..."
+echo "➤ Committing files…"
 svn commit -m "$NAME $VERSION released from GitHub" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+
+# If it's a full release i.e. tag like "1.0.0" and not like "1.0.0-rc1",
+# then generate a zip
+#if [[ $VERSION != *"-"* ]];then
+    echo "➤ Generating zip file…"
+    
+    # use a symbolic link so the directory in the zip matches the slug
+    ln -s "${SVN_DIR}/trunk" "${SVN_DIR}/${SLUG}"
+    zip -r "${GITHUB_WORKSPACE}/${SLUG}.zip" "$SLUG"
+    unlink "${SVN_DIR}/${SLUG}"
+
+    echo "zip-path=${GITHUB_WORKSPACE}/${SLUG}.zip" >> "${GITHUB_OUTPUT}"
+    echo "✓ Zip file generated!"
+#fi
 
 echo "✓ Plugin deployed!"
