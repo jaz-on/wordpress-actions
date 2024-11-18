@@ -6,7 +6,7 @@ LABEL "com.github.actions.icon"="upload-cloud"
 LABEL "com.github.actions.color"="blue"
 
 LABEL maintainer="Pierre Lannoy <pierre@lannoy.fr>"
-LABEL version="1.1.0"
+LABEL version="1.1.1"
 LABEL repository="https://github.com/Pierre-Lannoy/wordpress-actions"
 
 RUN apt-get update \
