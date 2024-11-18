@@ -111,7 +111,7 @@ fi
 svn status
 
 echo "➤ Committing files…"
-#svn commit -m "$NAME $VERSION released from GitHub" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+svn commit -m "$NAME $VERSION released from GitHub" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
 
 echo "✓ Plugin deployed!"
 
@@ -124,5 +124,3 @@ if [[ $VERSION != *"-"* ]];then
     echo "zip_file=${SLUG}-${VERSION}.zip" >> "${GITHUB_OUTPUT}"
     echo "✓ Zip file generated!"
 fi
-
-
